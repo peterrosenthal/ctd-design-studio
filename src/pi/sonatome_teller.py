@@ -77,7 +77,7 @@ class SonatomeTeller:
 
     def search_and_connect(self):
         started = time()
-        termination_lambda = lambda: (time() - started) > 0.04 or self.kill_program == True
+        termination_lambda = lambda: (time() - started) > 0.06 or self.kill_program == True
         self.clf.connect(rdwr=self.options, terminate=termination_lambda)
 
     def close(self):
@@ -103,7 +103,7 @@ class SonatomeTeller:
             blue = min(max(1 - (self.framecount_LED - 400) / 200, 0), 1)
         color = (math.floor(red * 255), math.floor(green * 255), math.floor(blue * 255))
         self.neopixels.fill(color)
-        self.neopixels.brightness = 0.5 + 0.3 * math.sin(self.framecount_LED * math.pi / 20)
+        self.neopixels.brightness = 0.6 + 0.4 * math.sin(self.framecount_LED * math.pi / 20)
         self.neopixels.show()
         self.framecount_LED = (self.framecount_LED + 1) % 600
 
@@ -111,7 +111,7 @@ if __name__ == '__main__':
     attepts_to_open = 10
     sonatome_teller = SonatomeTeller()
     while not sonatome_teller.kill_program and attepts_to_open > 0:
-        sleep(0.4)
+        sleep(0.06)
         sonatome_teller.update_leds()
         if sonatome_teller.nfc_is_open:
             try:
